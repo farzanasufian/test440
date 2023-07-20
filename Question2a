@@ -26,7 +26,7 @@ int main()
     // Set up the server address
     server_address.sin_family = AF_INET;
     server_address.sin_addr.s_addr = INADDR_ANY;
-    server_address.sin_port = htons(8686); // Choose any port number
+    server_address.sin_port = htons(8443); // Choose any port number
 
     // Bind the server socket to the specified IP address and port
     if (bind(server_socket, (struct sockaddr *)&server_address, sizeof(server_address)) < 0)
