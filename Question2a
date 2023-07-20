@@ -42,13 +42,14 @@ int main()
         exit(1);
     }
 
-    printf("Server listening on port 8686 ...\n");
+    printf("Server listening on port 8443 ...\n");
 
     while (1)
     {
         // Accept a client connection
         client_address_length = sizeof(client_address);
-        client_socket = accept(server_socket, (struct sockaddr *)&client_address, &client_addre>
+        client_socket = accept(server_socket, (struct sockaddr *)&client_address, &client_address_length);
+
         if (client_socket < 0)
         {
             perror("Accepting connection failed");
