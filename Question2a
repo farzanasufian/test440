@@ -19,47 +19,46 @@ int main()
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (server_socket == -1)
     {
-        perror("Socket creation failed");
+        perror("Failed to create the server socket");
         exit(1);
     }
 
     // Set up the server address
     server_address.sin_family = AF_INET;
     server_address.sin_addr.s_addr = INADDR_ANY;
-    server_address.sin_port = htons(8443); // Choose any port number
+    server_address.sin_port = htons(8443); // Choose any port number (in this case, 8443)
 
     // Bind the server socket to the specified IP address and port
     if (bind(server_socket, (struct sockaddr *)&server_address, sizeof(server_address)) < 0)
     {
-        perror("Binding failed");
+        perror("Failed to bind the server socket");
         exit(1);
     }
 
     // Listen for incoming connections
     if (listen(server_socket, 5) < 0)
     {
-        perror("Listening failed");
+        perror("Failed to start listening for incoming connections");
         exit(1);
     }
-
     printf("Server listening on port 8443 ...\n");
 
     while (1)
     {
         // Accept a client connection
         client_address_length = sizeof(client_address);
-        client_socket = accept(server_socket, (struct sockaddr *)&client_address, &client_address_length);
+        client_socket = accept(server_socket, (struct sockaddr *)&client_address, &client_addre>
 
         if (client_socket < 0)
         {
-            perror("Accepting connection failed");
+            perror("Failed to accept the client connection");
             exit(1);
         }
 
         printf("Client connected\n");
 
         // Generate a random number
-        int random_number = (rand() % (MAX_NUMBER - MIN_NUMBER + 1)) + MIN_NUMBER;
+        int random_number = rand() % (MAX_NUMBER - MIN_NUMBER + 1);
 
         // Convert the random number to a string
         sprintf(buffer, "%d", random_number);
@@ -67,7 +66,7 @@ int main()
         // Send the random number to the client
         if (send(client_socket, buffer, strlen(buffer), 0) < 0)
         {
-            perror("Sending data failed");
+            perror("Failed to send data to the client");
             exit(1);
         }
 
@@ -81,5 +80,5 @@ int main()
     // Close the server socket
     close(server_socket);
 
-        return 0;
+    return 0;
 }
