@@ -51,6 +51,8 @@ int main()
     printf("Received random number: %s\n", buffer);
 
     // Close the client socket
+
+    // Close the client socket
     close(client_socket);
 
         return 0;
