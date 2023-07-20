@@ -1,0 +1,44 @@
+import socket
+import random
+import threading
+
+# List of qoutes
+QUOTES = ["The only way to do great work is to love what you do. - Steve Jobs",
+"Success is the sum of small efforts, repeated day in and day out. - Robert Collier",
+"Your time is limited, so don't waste it living someone else's life. - Steve Jobs",
+"It's fine to celebrate success but it is more important to heed the lessons of failure. - Bill Gates"]
+
+def get_random_quote():
+    return random.choice(QUOTES)
+
+def handle_client(client_socket, client_address):
+    print(f"Client connected: {client_address}")
+
+    quote = get_random_quote()
+    client_socket.send(quote.encode())
+
+    client_socket.close()
+    print(f"Client disconnected: {client_address}")
+
+def main():
+    # Server configuration
+    SERVER_IP = "0.0.0.0"
+    SERVER_PORT = 8888
+
+    # Create the server socket
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.bind((SERVER_IP, SERVER_PORT))
+    server_socket.listen(5)
+
+    print(f"QOTD server listening on {SERVER_IP}:{SERVER_PORT} ...")
+
+    while True:
+        # Wait for a new client connection
+        client_socket, client_address = server_socket.accept()
+
+        # Handle the client in a separate thread
+        client_thread = threading.Thread(target=handle_client, args=(client_socket, client_address))
+        client_thread.start()
+
+if __name__ == "__main__":
+    main()
